@@ -17,12 +17,12 @@ class HeadHunterAPI(Parser):
 
     def __init__(self):
         self.url = 'https://api.hh.ru/vacancies'
-        self.params = {'text': '', 'page': 0, 'per_page': 10}  # per_page стр 100
+        self.params = {'text': '', 'page': 0, 'per_page': 1}  # per_page стр 100
         self.vacancies = []  # список вакансий
 
     def load_vacancies(self, keyword):
         self.params['text'] = keyword  # добавляем ключевое слово в параметры запроса
-        while self.params.get('page') != 10:  # 20 вакансий на странице
+        while self.params.get('page') != 1:  # 20 вакансий на странице
             response = requests.get(self.url, params=self.params)  # делаем запрос
             vacancies = response.json()['items']  # список вакансий
             self.vacancies.extend(vacancies)  # добавляем вакансии в список

@@ -1,6 +1,4 @@
 
-
-
 class Vacancies:
     """Класс для работы с вакансиями"""
     title: str  # название вакансии
@@ -67,3 +65,12 @@ class Vacancies:
                 f'Ссылка: {self.link}\n'
                 f'\n'
                 f'\n')
+
+    def __repr__(self):
+        return (
+            f'Vacancies(title={self.title}, '
+            f'link={self.link}, '
+            f'description={self.description}, '
+            f'city={self.city}, '
+            f'salary={self.salary})\n')
+
