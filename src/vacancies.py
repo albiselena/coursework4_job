@@ -1,3 +1,4 @@
+# Класс для работы с вакансиями
 
 class Vacancies:
     """Класс для работы с вакансиями"""
@@ -63,7 +64,6 @@ class Vacancies:
                 f'Описание требований и обязанностей:\n{self.description}\n'
                 f'Зарплата: {self.salary}\n'
                 f'Ссылка: {self.link}\n'
-                f'\n'
                 f'\n')
 
     def __repr__(self):
@@ -73,4 +73,3 @@ class Vacancies:
             f'description={self.description}, '
             f'city={self.city}, '
             f'salary={self.salary})\n')
-

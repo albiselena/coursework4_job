@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 import requests
-import pprint
+
 
 
 class Parser(ABC):
@@ -17,12 +17,12 @@ class HeadHunterAPI(Parser):
 
     def __init__(self):
         self.url = 'https://api.hh.ru/vacancies'
-        self.params = {'text': '', 'page': 0, 'per_page': 1}  # per_page стр 100
+        self.params = {'text': '', 'page': 0, 'per_page': 100}  # per_page стр 100
         self.vacancies = []  # список вакансий
 
     def load_vacancies(self, keyword):
         self.params['text'] = keyword  # добавляем ключевое слово в параметры запроса
-        while self.params.get('page') != 1:  # 20 вакансий на странице
+        while self.params.get('page') != 20:  # 20 вакансий на странице
             response = requests.get(self.url, params=self.params)  # делаем запрос
             vacancies = response.json()['items']  # список вакансий
             self.vacancies.extend(vacancies)  # добавляем вакансии в список
@@ -30,7 +30,4 @@ class HeadHunterAPI(Parser):
         return self.vacancies
 
 
-#hh = HeadHunterAPI()
 
-#vv = hh.load_vacancies('програмист')
-#pprint.pprint(vv)

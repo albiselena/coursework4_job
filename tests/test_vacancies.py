@@ -20,7 +20,7 @@ def test_init(vacancies):
     """Тест __init__ метода класса Vacancies"""
     assert vacancies[0].title == 'Python Developer'
     assert vacancies[0].link == 'https://hh.ru/vacancy/123'
-    assert vacancies[0].description == '• Обязанности: Писать код\n• Требования: Писать код'
+    assert vacancies[0].description == '• Обязанности: Писать код \n• Требования: Писать код '
     assert vacancies[0].city == 'Москва'
     assert vacancies[0].salary == 'от 100000 до 150000 руб.'
 
