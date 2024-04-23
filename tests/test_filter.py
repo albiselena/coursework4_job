@@ -3,7 +3,7 @@
 
 import pytest
 from src.vacancies import Vacancies
-from src.filter import filter_city, filter_salary, print_filtered_data
+from src.filter import filter_city, filter_salary, print_filtered_data, filter_jobs_by_keyword
 
 
 @pytest.fixture
@@ -11,10 +11,10 @@ def vacancies_list():
     return Vacancies.cast_to_object_list(
         [
             {'name': 'Разработчик', 'alternate_url': 'https://hh.ru/vacancy/1',
-             'snippet': {'requirement': 'Требования', 'responsibility': 'Обязанности'}, 'area': {'name': 'Москва'},
+             'snippet': {'requirement': 'Фильтр по слову', 'responsibility': 'Обязанности'}, 'area': {'name': 'Москва'},
              'salary': {'from': 70000, 'to': 150000, 'currency': 'RUR'}},
             {'name': 'Разработчик СПБ', 'alternate_url': 'https://hh.ru/vacancy/2',
-             'snippet': {'requirement': 'Требования', 'responsibility': 'Обязанности'},
+             'snippet': {'requirement': 'Требования', 'responsibility': 'Хирург в сочи'},
              'area': {'name': 'Санкт-Петербург'}, 'salary': None},
             {'name': 'Разработчик RUR M', 'alternate_url': 'https://hh.ru/vacancy/3',
              'snippet': {'requirement': 'Требования', 'responsibility': 'Обязанности'}, 'area': {'name': 'Москва'},
@@ -23,7 +23,7 @@ def vacancies_list():
              'snippet': {'requirement': 'Требования', 'responsibility': 'Обязанности'},
              'area': {'name': 'Санкт-Петербург'}, 'salary': None},
             {'name': 'Разработчик RUR S', 'alternate_url': 'https://hh.ru/vacancy/5',
-             'snippet': {'requirement': 'Требования', 'responsibility': 'Обязанности'}, 'area': {'name': 'Сочи'},
+             'snippet': {'requirement': 'Фильтр по слову', 'responsibility': 'Обязанности'}, 'area': {'name': 'Сочи'},
              'salary': {'to': 200000, 'currency': 'RUR'}},
 
         ]
@@ -52,3 +52,11 @@ def test_print_filtered_data(vacancies_list):
     """Тестирование вывода отфильтрованных данных по зарплате"""
     assert print_filtered_data(vacancies_list[:1]) is None
     assert print_filtered_data([]) is None
+
+
+def test_filter_jobs_by_keyword(vacancies_list, keyword='фильтр'):
+    """Тестирование фильтрации вакансий по ключевому слову"""
+    filtered = filter_jobs_by_keyword(vacancies_list, keyword)
+    assert len(filtered) == 2
+    assert all(keyword in vacancy.description.lower() for vacancy in filtered)
+    assert filter_jobs_by_keyword(vacancies_list, 'сочи') == [vacancies_list[1]]
